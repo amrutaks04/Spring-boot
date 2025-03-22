@@ -2,48 +2,42 @@ package com.example.User.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-import com.example.User.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.User.entity.User;
-
+import com.example.User.repository.UserRepository;
 @Service
 public class UserServiceImpl {
 
-
     @Autowired
-    private UserRepository userRepository; // ✅ Connect to PostgreSQL database
+    private UserRepository userRepository;
 
-    // ✅ Create a new user and store it in the database
+
     public User createUser(User user) {
+
         return userRepository.save(user);
     }
 
-    // ✅ Update an existing user by ID
-    public User updateUser(int id, User userDetails) {
-        Optional<User> optionalUser = userRepository.findById(id);
-        if (optionalUser.isPresent()) {
-            User user = optionalUser.get();
-            user.setName(userDetails.getName());
-            user.setEmail(userDetails.getEmail());
-            return userRepository.save(user);
-        } else {
-            throw new RuntimeException("User not found with ID: " + id);
-        }
+    public String updateUser(User user) {
+        userRepository.save(user);
+        return "User updated successfully";
     }
 
-    // ✅ Delete a user by ID
     public String deleteUser(int id) {
         userRepository.deleteById(id);
         return "User deleted successfully";
     }
 
-    // ✅ Get all users from the database
     public List<User> getUser() {
+
         return userRepository.findAll();
     }
-
 }
