@@ -38,7 +38,7 @@ public class UserController {
         return userServiceImpl.deleteUser(12);
     }
 
-    @GetMapping(value = "/user/getdetails")
+    @GetMapping(value = "/user/details")
     public List<User> getUser()
     {
 
